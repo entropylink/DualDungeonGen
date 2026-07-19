@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--
+  DualDungeonGen — shell de pestañas
+  Tab 1: Cartógrafo de Mazmorras (app principal, cartografo.html)
+  Tab 2: DualDungeonGen Studio (dungeon-studio.html)
+  El shell releva postMessage entre las dos apps: el Cartógrafo envía su
+  mapa exacto (PNG + datos) y el estudio lo recibe, detecta los cuartos y
+  genera las notas de DM/jugadores. Sirve igual en file:// que en el sitio.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Entropy · Dungeon Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0709; --panel:#171015; --panel2:#221a12; --line:#3a2c1d; --line2:#4a3826;
+    --ink:#ece3d4; --dim:#b6a589; --faint:#7c6b52; --accent:#cf9a44; --accent-soft:#e7c489; --accent-deep:#a06f24;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:var(--bg); color:var(--ink); overflow:hidden;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    display:flex; flex-direction:column;
+    height:100dvh;
+  }
+  .tabbar{
+    display:flex; align-items:stretch; gap:0; flex:none;
+    background:linear-gradient(180deg, rgba(40,30,20,.55), rgba(20,15,10,.25));
+    border-bottom:1px solid var(--line);
+    padding:0 8px; padding-top:env(safe-area-inset-top);
+  }
+  .brand{
+    display:flex; align-items:center; gap:8px; padding:9px 10px 9px 4px; flex:none;
+  }
+  .glyph{ width:26px;height:26px;border:1px solid var(--accent-deep);border-radius:7px;
+    display:grid;place-items:center;color:var(--accent-soft); flex:none;
+    background:radial-gradient(circle at 30% 25%, #3a2a17, #1b140d); }
+  .brand b{font-family:'Cinzel',serif; letter-spacing:.18em; font-weight:700; font-size:12px}
+  .tabs{display:flex; align-items:stretch; margin-left:6px; min-width:0}
+  .tab{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.04em;
+    color:var(--dim); background:transparent; border:0; cursor:pointer;
+    padding:0 16px; position:relative; white-space:nowrap; min-height:44px;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--accent-soft)}
+  .tab.on::after{content:""; position:absolute; left:10px; right:10px; bottom:0; height:2px;
+    background:linear-gradient(90deg,var(--accent-soft),var(--accent)); border-radius:2px}
+  .tab .dot{ display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--accent);
+    margin-left:7px; vertical-align:1px; opacity:0; transition:.2s; }
+  .tab .dot.show{opacity:1; animation:pulse 1.2s ease-in-out 3}
+  @keyframes pulse{50%{box-shadow:0 0 0 5px rgba(207,154,68,.18)}}
+  .frames{flex:1; position:relative; min-height:0}
+  .frames iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0; background:var(--bg);
+    visibility:hidden;
+  }
+  .frames iframe.on{visibility:visible}
+  @media (max-width:560px){
+    .brand b{display:none}
+    .tab{padding:0 12px; font-size:11px}
+  }
+</style>
+</head>
+<body>
+  <div class="tabbar">
+    <div class="brand">
+      <div class="glyph"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z"/><path d="M12 2 L12 22 M3 7 L21 17 M21 7 L3 17"/></svg></div>
+      <b>ENTROPY</b>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab on" id="tabCarto" role="tab" aria-selected="true">Cartógrafo</button>
+      <button class="tab" id="tabStudio" role="tab" aria-selected="false">DualDungeonGen<span class="dot" id="studioDot"></span></button>
+    </nav>
+  </div>
+  <div class="frames">
+    <iframe id="frCarto" class="on" src="cartografo.html" title="Cartógrafo de Mazmorras" allow="clipboard-write"></iframe>
+    <iframe id="frStudio" src="dungeon-studio.html" title="DualDungeonGen Studio" allow="clipboard-write"></iframe>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+  var frCarto=document.getElementById("frCarto"), frStudio=document.getElementById("frStudio");
+  var tabCarto=document.getElementById("tabCarto"), tabStudio=document.getElementById("tabStudio");
+  var dot=document.getElementById("studioDot");
+  var studioReady=false, queuedMap=null;
+
+  function show(which){
+    var carto=which==="carto";
+    frCarto.classList.toggle("on",carto); frStudio.classList.toggle("on",!carto);
+    tabCarto.classList.toggle("on",carto); tabStudio.classList.toggle("on",!carto);
+    tabCarto.setAttribute("aria-selected",carto); tabStudio.setAttribute("aria-selected",!carto);
+    if(!carto) dot.classList.remove("show");
+    try{ history.replaceState(null,"", "#"+(carto?"cartografo":"estudio")); }catch(e){}
+  }
+  tabCarto.addEventListener("click",function(){ show("carto"); });
+  tabStudio.addEventListener("click",function(){ show("studio"); });
+  if(location.hash==="#estudio") show("studio");
+
+  // Handshake: tell both apps who the shell is (the Cartógrafo locks its
+  // postMessage target to this origin; the studio learns it's embedded).
+  function hello(fr){ try{ fr.contentWindow.postMessage({type:"ddg-shell-hello"},"*"); }catch(e){} }
+  frCarto.addEventListener("load",function(){ hello(frCarto); });
+  frStudio.addEventListener("load",function(){ hello(frStudio); });
+
+  function deliver(msg){
+    try{ frStudio.contentWindow.postMessage(msg,"*"); }catch(e){ return; }
+    dot.classList.add("show");
+    show("studio");
+  }
+
+  // Relay: messages are trusted by SOURCE IDENTITY (they must come from one
+  // of our two iframes), which works the same on file:// and on the site.
+  window.addEventListener("message",function(e){
+    if(e.source===frCarto.contentWindow && e.data && e.data.type==="ddg-map"){
+      if(studioReady) deliver(e.data); else queuedMap=e.data;
+    }
+    else if(e.source===frStudio.contentWindow && e.data && e.data.type==="ddg-studio-ready"){
+      studioReady=true;
+      if(queuedMap){ deliver(queuedMap); queuedMap=null; }
+    }
+  });
+})();
+</script>
+</body>
+</html>

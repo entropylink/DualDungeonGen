@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DualDungeonGen — Dungeon Map Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* DDG:CSS */
+</style>
+</head>
+<body class="dm">
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brandmark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 2l3 3-3 3-3-3 3-3zm7 7l3 3-3 3-3-3 3-3zM5 9l3 3-3 3-3-3 3-3zm7 7l3 3-3 3-3-3 3-3z" fill="currentColor"/></svg>
+      <span class="brand-txt">DualDungeon<span class="accent">Gen</span></span>
+    </div>
+    <div class="tb-actions">
+      <button id="btnGenerate" class="btn primary" data-t="generate">Generate</button>
+      <button id="btnReroll" class="btn icon" title="Re-roll seed" data-t-title="reroll">⟳</button>
+      <div class="menu">
+        <button class="btn" data-menu="importMenu" data-t="import">Import ▾</button>
+        <div class="menu-list" id="importMenu" hidden>
+          <button data-imp="json" data-t="imp_json">From JSON…</button>
+          <button data-imp="image" data-t="imp_image">From image…</button>
+          <button data-imp="ascii" data-t="imp_ascii">Paste grid…</button>
+          <button data-imp="blank" data-t="imp_blank">Blank canvas</button>
+        </div>
+      </div>
+      <div class="menu">
+        <button class="btn" data-menu="exportMenu" data-t="export">Export ▾</button>
+        <div class="menu-list" id="exportMenu" hidden>
+          <button data-exp="html" data-t="exp_html">Interactive HTML</button>
+          <button data-exp="json" data-t="exp_json">JSON (re-importable)</button>
+          <button data-exp="png-dm" data-t="exp_png_dm">PNG · DM map</button>
+          <button data-exp="png-pl" data-t="exp_png_pl">PNG · Player map</button>
+        </div>
+      </div>
+    </div>
+    <div class="seg lang" id="langToggle">
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="es">ES</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="sidebar left">
+      <section class="pane">
+        <h3 data-t="params_h">Parameters</h3>
+        <label class="fld"><span data-t="p_theme">Theme</span>
+          <select id="pTheme">
+            <option value="crafters">Crafters' Guild</option>
+            <option value="crypt">Undead Crypt</option>
+            <option value="cave">Beast Warren</option>
+            <option value="cult">Cult Sanctum</option>
+          </select>
+        </label>
+        <div class="fld-row">
+          <label class="fld"><span data-t="p_size">Party size</span>
+            <input id="pSize" type="number" min="1" max="12" value="5"></label>
+          <label class="fld"><span data-t="p_level">Level</span>
+            <input id="pLevel" type="number" min="1" max="20" value="4"></label>
+        </div>
+        <div class="fld-row">
+          <label class="fld"><span data-t="p_rooms">Rooms</span>
+            <input id="pRooms" type="number" min="5" max="9" value="7"></label>
+          <label class="fld"><span data-t="p_diff">Climax</span>
+            <select id="pDiff"><option value="hard" data-t="diff_hard">Hard</option><option value="deadly" data-t="diff_deadly">Deadly</option></select>
+          </label>
+        </div>
+        <label class="fld"><span data-t="p_seed">Seed</span>
+          <div class="fld-row seedrow">
+            <input id="pSeed" type="number" value="1"><button id="btnRandSeed" class="btn tiny" data-t="random">Random</button>
+          </div>
+        </label>
+        <button id="btnGenerate2" class="btn primary block" data-t="generate_full">Generate dungeon</button>
+      </section>
+
+      <section class="pane">
+        <h3 data-t="tools_h">Map editor</h3>
+        <div class="toolbar" id="toolbar">
+          <button class="tool active" data-tool="select" data-t-title="tool_select" title="Select / move">▣</button>
+          <button class="tool" data-tool="draw" data-t-title="tool_draw" title="Draw room">▭</button>
+          <button class="tool" data-tool="connect" data-t-title="tool_connect" title="Connect rooms">⇆</button>
+          <button class="tool" data-tool="secret" data-t-title="tool_secret" title="Toggle secret">✶</button>
+          <button class="tool danger" data-tool="delete" data-t-title="tool_delete" title="Delete room">🗑</button>
+        </div>
+        <p class="tool-hint" id="toolHint" data-t="hint_select">Click a room to select it, then drag to move.</p>
+        <label class="fld imgctl" id="imgOpacityWrap" hidden><span data-t="img_opacity">Reference image opacity</span>
+          <input id="imgOpacity" type="range" min="0" max="100" value="55"></label>
+        <button id="btnClearImg" class="btn tiny block" hidden data-t="img_clear">Remove reference image</button>
+      </section>
+
+      <section class="pane collapsible" id="metaPane">
+        <h3 data-t="meta_h">Dungeon info</h3>
+        <label class="fld"><span data-t="m_title">Title</span><input id="mTitle" type="text"></label>
+        <label class="fld"><span data-t="m_sub">Subtitle</span><input id="mSub" type="text"></label>
+        <label class="fld"><span data-t="m_overview">Overview / hook</span><textarea id="mOverview" rows="4"></textarea></label>
+      </section>
+    </aside>
+
+    <main class="maps">
+      <div class="mapgrid">
+        <div class="mapcard">
+          <div class="mapcard-h"><span class="dot dm"></span><span data-t="dm_map">DM Map</span>
+            <span class="hint" id="dmHint" data-t="click_hint">Click a room for details</span></div>
+          <div class="mapwrap" id="wrapDM">
+            <img id="refImg" class="refimg" hidden alt="">
+            <svg id="mapDM" class="ddg-map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"></svg>
+          </div>
+        </div>
+        <div class="mapcard">
+          <div class="mapcard-h"><span class="dot pl"></span><span data-t="player_map">Player Map</span>
+            <span class="hint" data-t="handout">Clean handout</span></div>
+          <div class="mapwrap">
+            <svg id="mapPL" class="ddg-map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"></svg>
+          </div>
+        </div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </main>
+
+    <aside class="sidebar right">
+      <div id="inspector"><!-- populated by app --></div>
+    </aside>
+  </div>
+
+  <footer class="statusbar"><span id="status" data-t="ready">Ready.</span></footer>
+</div>
+
+<!-- generic modal -->
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-h"><span id="modalTitle">Modal</span><button class="btn icon" id="modalClose">✕</button></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+
+<script>
+/* DDG:JS */
+</script>
+</body>
+</html>

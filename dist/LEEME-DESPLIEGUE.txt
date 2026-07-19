@@ -1,0 +1,36 @@
+ENTROPY · DUNGEON SUITE — despliegue en el sitio
+=================================================
+
+QUÉ ES
+  index.html           → entrada (shell con 2 pestañas)
+  cartografo.html      → pestaña 1: Cartógrafo de Mazmorras (app principal)
+  dungeon-studio.html  → pestaña 2: DualDungeonGen (mapa dual DM/Jugadores)
+
+CÓMO DESPLEGAR
+  1. Copia LOS TRES .html juntos a cualquier carpeta del sitio
+     (p. ej. entropy.com.mx/mazmorras/). Deben quedar hermanos:
+     las rutas entre ellos son relativas.
+  2. La URL pública es la carpeta misma (index.html).
+  3. No hay build, backend ni base de datos. Única dependencia
+     externa: Google Fonts.
+
+IA EN EL SITIO (visitantes)
+  El panel "Generación con IA" del estudio pide al visitante SU
+  propia clave (Anthropic / OpenAI / Gemini). La clave se guarda
+  SOLO en el localStorage de su navegador y las llamadas van
+  directo navegador→proveedor. Ningún servidor tuyo la ve ni la
+  proxea; cada quien gasta su propia clave.
+
+IA LOCAL (tu máquina, sin clave)
+  Tu Claude Code solo se usa cuando TÚ corres el puente en tu
+  propia máquina (repo del proyecto):
+      node ddg-server.js       →  http://localhost:8824/
+  El sitio público nunca puede alcanzarlo.
+
+FLUJO
+  Cartógrafo: dibuja o Generar → botón «▶ Estudio» → el estudio
+  recibe el mapa EXACTO, detecta los cuartos (determinístico, por
+  muros y puertas), pides el ambiente y la IA escribe las notas
+  de DM y de jugadores. Clic en cada cuarto para verlas.
+
+  Tip: los cuartos se separan con puertas/muros en el Cartógrafo.

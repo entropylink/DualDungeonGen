@@ -1,0 +1,100 @@
+{
+  "format": "ddg-dungeon",
+  "version": 1,
+  "meta": {
+    "title": { "en": "The Gnawed Hollow", "es": "El Hueco Roído" },
+    "subtitle": { "en": "A goblin warren of tripwires and rockfalls, ruled from the deep chamber.", "es": "Una madriguera trasgo de trampas y desprendimientos, gobernada desde la cámara honda." },
+    "theme": "cave",
+    "party": { "size": 4, "level": 3 },
+    "cell": 26,
+    "badge": { "en": "Goblin Warren", "es": "Madriguera Trasgo" },
+    "difficulty": "Medium"
+  },
+  "entry": "A",
+  "rooms": [
+    { "id": "A", "x": 2, "y": 12, "w": 6, "h": 5, "secret": false, "feats": ["stalagmites", "rubble"],
+      "name": { "en": "Cave Mouth", "es": "Boca de la Cueva" },
+      "see": { "en": "Daylight dies a few paces in. Gnawed bones and a crude totem of skulls mark the threshold, and something skitters back from the light.", "es": "La luz del día muere a unos pasos. Huesos roídos y un tótem tosco de cráneos marcan el umbral, y algo se escabulle de la luz." },
+      "mon": { "en": ["3× Goblin (CR ¼)"], "es": ["3× Trasgo (VD ¼)"] },
+      "tokens": [ { "t": "GOB", "cr": 0.25 }, { "t": "GOB", "cr": 0.25 }, { "t": "GOB", "cr": 0.25 } ],
+      "trap": { "en": "Rockfall tripwire across the mouth — DC 13 Perception; DC 13 Dex or 2d6 bludgeoning and knocked prone.", "es": "Alambre de desprendimiento en la boca — CD 13 Percepción; CD 13 Des o 2d6 contundente y derribado." },
+      "loot": { "en": "A sentry's stash: 15 gp and a horn used to raise the alarm.", "es": "El alijo de un centinela: 15 po y un cuerno para dar la alarma." },
+      "tac": { "en": "Warm-up. The goblins loose the tripwire, then harry and flee deeper to raise the warren. Let them teach that this place bites.", "es": "Calentamiento. Los trasgos sueltan el alambre y luego hostigan y huyen para alertar la madriguera. Que enseñen que este lugar muerde." } },
+
+    { "id": "B", "x": 2, "y": 3, "w": 6, "h": 5, "secret": false, "feats": ["pool", "rubble"],
+      "name": { "en": "Drip Gallery", "es": "Galería de Goteo" },
+      "see": { "en": "A low chamber where water drips into a black pool. The floor is a lattice of slick stone and half-covered holes.", "es": "Una cámara baja donde el agua gotea en una charca negra. El suelo es un enrejado de piedra resbaladiza y agujeros a medio cubrir." },
+      "mon": { "en": ["Worg (CR ½)", "2× Goblin (CR ¼)"], "es": ["Worg (VD ½)", "2× Trasgo (VD ¼)"] },
+      "tokens": [ { "t": "WRG", "cr": 0.5 }, { "t": "GOB", "cr": 0.25 }, { "t": "GOB", "cr": 0.25 } ],
+      "trap": { "en": "Covered pit over the pool — DC 14 Perception; DC 14 Dex or fall 10 ft into cold water (1d6) with the current pulling toward a grate.", "es": "Foso cubierto sobre la charca — CD 14 Percepción; CD 14 Des o caída de 3 m a agua fría (1d6) con la corriente tirando hacia una reja." },
+      "loot": { "en": "A drowned scout's pack: 40 gp and a Potion of Healing.", "es": "El morral de un explorador ahogado: 40 po y una Poción de Curación." },
+      "tac": { "en": "The worg goblin-riders drive PCs toward the pit; the pool is difficult terrain. A goblin will bolt to fetch the boss if it can.", "es": "El worg y sus jinetes empujan a los PJs hacia el foso; la charca es terreno difícil. Un trasgo correrá a buscar al jefe si puede." } },
+
+    { "id": "C", "x": 11, "y": 12, "w": 6, "h": 5, "secret": false, "feats": ["stalagmites", "pool"],
+      "name": { "en": "Web-Choked Fork", "es": "Bifurcación Entelarañada" },
+      "see": { "en": "The passage splits around a forest of stalagmites draped in thick, twitching silk. Wrapped shapes hang above.", "es": "El pasaje se divide en torno a un bosque de estalagmitas cubiertas de seda espesa y temblorosa. Formas envueltas cuelgan arriba." },
+      "mon": { "en": ["Giant Spider (CR 1)", "2× Goblin (CR ¼)"], "es": ["Araña Gigante (VD 1)", "2× Trasgo (VD ¼)"] },
+      "tokens": [ { "t": "SPD", "cr": 1 }, { "t": "GOB", "cr": 0.25 }, { "t": "GOB", "cr": 0.25 } ],
+      "trap": { "en": "Sticky web curtain across the fork — DC 13 Perception; entering blind is DC 12 Dex or restrained until DC 12 Str to break free.", "es": "Cortina de tela pegajosa en la bifurcación — CD 13 Percepción; entrar a ciegas es CD 12 Des o apresado hasta CD 12 Fue para soltarse." },
+      "loot": { "en": "A cocooned victim's belt: 30 gp and a vial of antitoxin.", "es": "El cinturón de una víctima encapullada: 30 po y un vial de antitoxina." },
+      "tac": { "en": "This is the hub — all paths cross here. The spider drops on the first restrained target; burning the webs clears the terrain and hurts it.", "es": "Este es el eje — todos los caminos se cruzan aquí. La araña cae sobre el primer objetivo apresado; quemar las telas despeja el terreno y la daña." } },
+
+    { "id": "D", "x": 11, "y": 3, "w": 6, "h": 5, "secret": false, "feats": ["crates", "barrels"],
+      "name": { "en": "Loot Cache", "es": "Alijo del Botín" },
+      "see": { "en": "Stolen crates and barrels piled to the ceiling around a great brass gong hung from a stalactite.", "es": "Cajas y barriles robados apilados hasta el techo en torno a un gran gong de latón colgado de una estalactita." },
+      "mon": { "en": ["Bugbear (CR 1)", "Goblin (CR ¼)"], "es": ["Osgo (VD 1)", "Trasgo (VD ¼)"] },
+      "tokens": [ { "t": "BGB", "cr": 1 }, { "t": "GOB", "cr": 0.25 } ],
+      "trap": { "en": "Dart-rigged crate — opening the wrong one is DC 14 Investigation to spot; DC 14 Dex or 2d4 piercing from a spring-loaded volley.", "es": "Caja con dardos — abrir la equivocada es CD 14 Investigación para detectarlo; CD 14 Des o 2d4 perforante de una descarga con resorte." },
+      "loot": { "en": "The warren's plunder: 120 gp, two bolts of fine cloth (25 gp), and a masterwork shortbow.", "es": "El saqueo de la madriguera: 120 po, dos rollos de tela fina (25 po) y un arco corto de obra maestra." },
+      "tac": { "en": "Clever link: the gong is the boss's alarm. Smash or muffle it and the boss can't call reinforcements at the climax — reward the party that spots it.", "es": "Vínculo astuto: el gong es la alarma del jefe. Rómpelo o amortígualo y el jefe no podrá llamar refuerzos en el clímax — premia a quien lo note." } },
+
+    { "id": "E", "x": 20, "y": 7, "w": 7, "h": 6, "secret": false, "feats": ["throne", "brazier"],
+      "name": { "en": "The Deep Chamber", "es": "La Cámara Honda" },
+      "see": { "en": "A high vault lit by a guttering brazier. A crude throne of antlers and shields sits on a raised ledge, and a heavy figure rises from it, snarling for silence.", "es": "Una bóveda alta iluminada por un brasero parpadeante. Un tosco trono de astas y escudos se alza en un saliente, y una figura pesada se levanta de él, gruñendo por silencio." },
+      "mon": { "en": ["Goblin Boss (CR 1)", "3× Goblin (CR ¼)", "Worg (CR ½)"], "es": ["Jefe Trasgo (VD 1)", "3× Trasgo (VD ¼)", "Worg (VD ½)"] },
+      "tokens": [ { "t": "BOSS", "cr": 2 }, { "t": "GOB", "cr": 0.25 }, { "t": "GOB", "cr": 0.25 }, { "t": "WRG", "cr": 0.5 } ],
+      "trap": { "en": "Ledge trip-log — charging the throne triggers a rolling log; DC 15 Dex or 2d6 bludgeoning and knocked back off the ledge (1d6 fall).", "es": "Tronco-trampa del saliente — cargar contra el trono lanza un tronco rodante; CD 15 Des o 2d6 contundente y empujado fuera del saliente (1d6 de caída)." },
+      "loot": { "en": "The boss's hoard — 200 gp, a +1 shortsword, and a Potion of Greater Healing. His signal-horn opens the secret cache.", "es": "El botín del jefe — 200 po, una espada corta +1 y una Poción de Curación Mayor. Su cuerno de señales abre el alijo secreto." },
+      "tac": { "en": "Climax. The boss uses its goblins as shields and Redirects hits onto them; if the gong in the Loot Cache still stands, one goblin flees round 2 to ring it and 2 more goblins arrive in 3 rounds. Fight on the ledge to split the pack.", "es": "Clímax. El jefe usa a sus trasgos como escudos y Redirige golpes hacia ellos; si el gong del Alijo sigue en pie, un trasgo huye en el asalto 2 para tañerlo y llegan 2 trasgos más en 3 asaltos. Pelea en el saliente para dividir la manada." } },
+
+    { "id": "S", "x": 20, "y": 1, "w": 5, "h": 4, "secret": true, "feats": ["crates", "safe"],
+      "name": { "en": "Smuggler's Cache", "es": "Alijo del Contrabandista" },
+      "see": { "en": "Behind a curtain of roots and hide: a dry crevice with a small iron strongbox and a rolled map pinned to the wall.", "es": "Tras una cortina de raíces y cuero: una grieta seca con una pequeña caja de hierro y un mapa enrollado clavado en la pared." },
+      "loot": { "en": "The strongbox (boss's horn or DC 15): 300 gp, a Wand of Magic Missiles (7 charges). The map marks a trade road and names the human quartermaster who's been arming the warren.", "es": "La caja (el cuerno del jefe o CD 15): 300 po, una Varita de Proyectiles Mágicos (7 cargas). El mapa marca un camino comercial y nombra al intendente humano que ha estado armando la madriguera." },
+      "tac": { "en": "No fight. This is the 'why': the goblins are being paid and armed by someone above them. The map turns a cave-clear into the start of a bigger job.", "es": "Sin combate. Este es el 'porqué': alguien de más arriba paga y arma a los trasgos. El mapa convierte una limpieza de cueva en el inicio de un trabajo mayor." } }
+  ],
+  "corridors": [
+    ["A", "B"],
+    ["A", "C"],
+    ["B", "D"],
+    ["C", "D"],
+    ["C", "E"],
+    ["D", "S", { "secret": true }]
+  ],
+  "overview": {
+    "en": "Caravans on the trade road keep vanishing near the old cave mouth. Inside, a goblin warren has grown bold, trapping every approach and hoarding stolen goods under a bugbear-backed boss in the deep chamber. Clear the warren, find out who's been arming them, and deal with the boss — by blade, by cunning, or by turning his own alarm against him.", "es": "Las caravanas del camino comercial siguen desapareciendo cerca de la vieja boca de la cueva. Dentro, una madriguera trasgo se ha crecido, trampeando cada acceso y acumulando bienes robados bajo un jefe respaldado por un osgo en la cámara honda. Limpia la madriguera, averigua quién los ha estado armando y ocúpate del jefe — con filo, con astucia, o volviendo su propia alarma en su contra."
+  },
+  "notes": {
+    "en": [
+      "<b>Party:</b> 4 PCs, level 3. Thresholds — Medium 600 · Hard 900 · Deadly 1,600 XP.",
+      "<b>Pacing:</b> the Cave Mouth is a warm-up; the Deep Chamber is the spike. Offer a short rest after clearing the Web-Choked Fork.",
+      "<b>Clever link:</b> the brass gong in the Loot Cache is the boss's alarm — silence it and the climax stays a fair fight instead of a reinforced one.",
+      "<b>Secret:</b> the Smuggler's Cache holds the 'why' — a map naming the quartermaster arming the goblins. Story, not combat.",
+      "<b>Non-violent out:</b> the boss is a coward; a captured PC, a bribe, or proof his paymaster has abandoned him can end the fight in talk."
+    ],
+    "es": [
+      "<b>Grupo:</b> 4 PJs, nivel 3. Umbrales — Media 600 · Difícil 900 · Mortal 1.600 PX.",
+      "<b>Ritmo:</b> la Boca de la Cueva es calentamiento; la Cámara Honda es el pico. Ofrece un descanso corto tras despejar la Bifurcación Entelarañada.",
+      "<b>Vínculo astuto:</b> el gong de latón del Alijo es la alarma del jefe — siléncialo y el clímax será un combate justo en vez de uno reforzado.",
+      "<b>Secreto:</b> el Alijo del Contrabandista guarda el 'porqué' — un mapa que nombra al intendente que arma a los trasgos. Historia, no combate.",
+      "<b>Salida no violenta:</b> el jefe es un cobarde; un PJ capturado, un soborno o la prueba de que su pagador lo ha abandonado pueden acabar la pelea con palabras."
+    ]
+  },
+  "budget": [
+    ["A", { "en": "Cave Mouth", "es": "Boca de la Cueva" }, { "en": "3× Goblin + rockfall", "es": "3× Trasgo + desprendimiento" }, "~150 XP", "Easy"],
+    ["B", { "en": "Drip Gallery", "es": "Galería de Goteo" }, { "en": "Worg + 2× Goblin + pit", "es": "Worg + 2× Trasgo + foso" }, "~200 XP", "Medium"],
+    ["C", { "en": "Web-Choked Fork", "es": "Bifurcación Entelarañada" }, { "en": "Giant Spider + 2× Goblin", "es": "Araña Gigante + 2× Trasgo" }, "~300 XP", "Medium"],
+    ["D", { "en": "Loot Cache", "es": "Alijo del Botín" }, { "en": "Bugbear + Goblin + darts", "es": "Osgo + Trasgo + dardos" }, "~250 XP", "Medium"],
+    ["E", { "en": "The Deep Chamber", "es": "La Cámara Honda" }, { "en": "Goblin Boss + 3× Goblin + Worg", "es": "Jefe Trasgo + 3× Trasgo + Worg" }, "~450 XP", "Hard"]
+  ]
+}
