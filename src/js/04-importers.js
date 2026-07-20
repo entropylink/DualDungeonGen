@@ -26,6 +26,12 @@
     return null;
   }
   function num(v, d) { v = Number(v); return isFinite(v) ? v : d; }
+  // Only accept an image reference that is an inline data:image payload or an
+  // https URL. Anything else (javascript:, data:text/html, arbitrary markup,
+  // http:) is dropped so a hostile import can't inject into the <image href>.
+  function safeImage(v) {
+    return (typeof v === "string" && (/^data:image\//i.test(v) || /^https:/i.test(v))) ? v : "";
+  }
 
   function coerceRoom(r) {
     if (!r || r.id == null) throw new Error("room missing id");
@@ -58,6 +64,7 @@
     var rooms = (obj.rooms || []).map(coerceRoom);
     if (!rooms.length) throw new Error("no rooms");
     var meta = obj.meta || {};
+    var img = safeImage(meta.image);
     var D = {
       format: "ddg-dungeon", version: 1,
       meta: {
@@ -69,9 +76,9 @@
         badge: meta.badge ? bil(meta.badge) : { en: "Custom", es: "Personalizada" },
         difficulty: meta.difficulty || "Hard",
         seed: meta.seed,
-        image: meta.image || undefined,
-        imageAspect: meta.image ? num(meta.imageAspect, 0.72) : undefined,
-        imageOpacity: meta.image ? (meta.imageOpacity != null ? num(meta.imageOpacity, 1) : 1) : undefined
+        image: img || undefined,
+        imageAspect: img ? num(meta.imageAspect, 0.72) : undefined,
+        imageOpacity: img ? (meta.imageOpacity != null ? num(meta.imageOpacity, 1) : 1) : undefined
       },
       rooms: rooms,
       corridors: Array.isArray(obj.corridors) ? obj.corridors : (Array.isArray(obj.cor) ? obj.cor : []),

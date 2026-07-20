@@ -220,6 +220,11 @@
   function esc(x) {
     return String(x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
+  // Attribute-safe escape: esc() + quotes. Used for any untrusted value that
+  // lands inside a double-quoted SVG attribute (e.g. an imported meta.image).
+  function escAttr(x) {
+    return esc(x).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
 
   // ---- feature glyph library (ink line-work on cream) -------------------
   var sk = 'stroke="' + INK + '" stroke-width="1.6" fill="none"';
@@ -249,7 +254,7 @@
     var W = 1000, H = Math.round(1000 * aspect);
     var op = (D.meta.imageOpacity != null ? D.meta.imageOpacity : 1);
     var s = '<g font-family="Cinzel, \'Crimson Pro\', serif">';
-    s += '<image href="' + D.meta.image + '" x="0" y="0" width="' + W + '" height="' + H + '" opacity="' + op + '" preserveAspectRatio="none"/>';
+    s += '<image href="' + escAttr(D.meta.image) + '" x="0" y="0" width="' + W + '" height="' + H + '" opacity="' + op + '" preserveAspectRatio="none"/>';
 
     // player mode: cover secret rooms (their exact shape) so the handout hides them
     if (mode === "player") {

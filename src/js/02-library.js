@@ -14,7 +14,7 @@
   var MON = {
     flying_sword:   { en: "Flying Sword", es: "Espada Voladora", cr: 0.25, tok: "SW" },
     animated_armor: { en: "Animated Armor", es: "Armadura Animada", cr: 1, tok: "AA" },
-    helmed_horror:  { en: "Helmed Horror", es: "Horror con Yelmo", cr: 4, tok: "HH" },
+    flesh_golem:    { en: "Flesh Golem", es: "Gólem de Carne", cr: 5, tok: "FG" },
     rug:            { en: "Rug of Smothering", es: "Alfombra Asfixiante", cr: 2, tok: "RUG" },
     mimic:          { en: "Mimic", es: "Mímico", cr: 2, tok: "MIM" },
     flameskull:     { en: "Flameskull", es: "Calavera Flamígera", cr: 4, tok: "FSK" },
@@ -30,7 +30,7 @@
     wight:      { en: "Wight", es: "Wight", cr: 3, tok: "WI" },
     wraith:     { en: "Wraith", es: "Aparición", cr: 5, tok: "WR" },
     will_o_wisp:{ en: "Will-o'-Wisp", es: "Fuego Fatuo", cr: 2, tok: "WSP" },
-    minotaur_sk:{ en: "Minotaur Skeleton", es: "Esqueleto Minotauro", cr: 2, tok: "MSK" },
+    mummy:      { en: "Mummy", es: "Momia", cr: 3, tok: "MUM" },
 
     giant_rat:  { en: "Giant Rat", es: "Rata Gigante", cr: 0.125, tok: "RAT" },
     swarm_rats: { en: "Swarm of Rats", es: "Enjambre de Ratas", cr: 0.25, tok: "SWR" },
@@ -70,7 +70,7 @@
       name: { en: "The {ord} Guild of the Broken Cog", es: "El Gremio {ord} del Engranaje Roto" },
       subtitle: { en: "A silent guildhall where the tools have turned on their makers.", es: "Un gremio en silencio donde las herramientas se volvieron contra sus dueños." },
       badge: { en: "Crafters' Grounds", es: "Recinto de Artesanos" },
-      pools: { entry: ["flying_sword", "animated_armor"], work: ["rug", "mimic", "gray_ooze", "flying_sword", "animated_armor"], climax: ["helmed_horror", "flameskull"], hazard: ["ochre_jelly", "gray_ooze", "swarm_insects"] },
+      pools: { entry: ["flying_sword", "animated_armor"], work: ["rug", "mimic", "gray_ooze", "flying_sword", "animated_armor"], climax: ["flesh_golem", "flameskull"], hazard: ["ochre_jelly", "gray_ooze", "swarm_insects"] },
       feats: { entry: ["crest", "desk", "cases"], work: [["looms", "tapestry"], ["kiln", "anvil", "bellows"], ["benches", "lathe"], ["shelves", "crates", "vat"]], climax: ["columns", "plinth"], secret: ["deskbig", "bookshelf", "safe"], hazard: ["barrels", "vat"] },
       overview: [
         { en: "The Crafters' Guild has gone quiet. Its Guildmaster tried to bind a living spirit into a masterwork guardian — to protect, and secretly to sell, the guild's crown achievement. The binding half-failed and the spirit's animating force bled into every tool in the hall. Find out what happened, survive the grounds, and secure the masterwork — or free the spirit and let the whole place fall still.",
@@ -85,7 +85,7 @@
       name: { en: "The {ord} Crypt of Ashen Vigil", es: "La Cripta {ord} de la Vigilia Cenicienta" },
       subtitle: { en: "A tomb that will not stay sealed, and the dead keep its old duty.", es: "Una tumba que no permanece sellada, y los muertos cumplen su vieja tarea." },
       badge: { en: "Undead Tomb", es: "Tumba de No-muertos" },
-      pools: { entry: ["skeleton", "zombie"], work: ["ghoul", "shadow", "specter", "skeleton", "giant_rat"], climax: ["wight", "wraith", "flameskull", "minotaur_sk"], hazard: ["gray_ooze", "swarm_rats", "shadow"] },
+      pools: { entry: ["skeleton", "zombie"], work: ["ghoul", "shadow", "specter", "skeleton", "giant_rat"], climax: ["wight", "wraith", "flameskull", "mummy"], hazard: ["gray_ooze", "swarm_rats", "shadow"] },
       feats: { entry: ["altar", "brazier"], work: [["sarcophagus"], ["columns", "brazier"], ["shelves", "rubble"], ["altar", "brazier"]], climax: ["sarcophagus", "throne"], secret: ["deskbig", "safe"], hazard: ["pool", "rubble"] },
       overview: [
         { en: "The old crypt's wards have failed. Something beneath has woken the interred and set them to a ritual half-remembered from life. The tomb's grave-lord waits at the heart, and its rite is nearly complete. Cut down what walks, learn who broke the seal, and end the rite — by blade, by fire, or by laying the grave-lord to rest.",
