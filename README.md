@@ -158,3 +158,19 @@ works offline.
 
 Connected rooms must overlap on one axis so the corridor router draws them straight;
 the editor warns when they don't.
+
+## License & attribution
+
+Code is MIT-licensed (see `LICENSE`). The creature bank uses names and
+challenge ratings from the SRD 5.1 by Wizards of the Coast LLC, under
+CC-BY-4.0 — full attribution in `NOTICE`. No rulebook text or stat blocks are
+reproduced; all adventure prose is original. Not affiliated with or endorsed
+by Wizards of the Coast.
+
+## A note on the local AI bridge
+
+`ddg-server.js` runs Claude Code with `--permission-mode bypassPermissions`.
+That is a deliberate, bounded choice: the server listens on loopback only,
+validates Host and Origin, restricts the agent to `Read,Write` tools inside a
+throwaway temp directory, and feeds the prompt via stdin (no shell
+interpolation). Review those guards before changing the surface.
